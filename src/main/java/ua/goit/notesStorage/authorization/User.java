@@ -1,24 +1,27 @@
 package ua.goit.notesStorage.authorization;
 
-import ua.goit.notesStorage.BaseEntity;
-import ua.goit.notesStorage.Note.Note;
-import ua.goit.notesStorage.enums.Role;
 import lombok.*;
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import ua.goit.notesStorage.BaseEntity;
+import ua.goit.notesStorage.Note.Note;
+import ua.goit.notesStorage.enums.Role;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.Collection;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
-@Data
-@EqualsAndHashCode(exclude = "notes")
-@NoArgsConstructor
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "users")
@@ -28,19 +31,13 @@ public class User implements BaseEntity<UUID>, UserDetails {
 
     @Id
     @GeneratedValue(generator = "UUID")
-    @GenericGenerator(
-            name = "UUID",
-            strategy = "org.hibernate.id.UUIDGenerator"
-    )
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
 
     @NotBlank(message = "The username cannot be empty")
     @Pattern(regexp = "[a-zA-Z0-9]+")
-    @Size(
-            min = 5,
-            max = 50,
-            message = "The username must be between {min} and {max} characters long and contains only numbers and english letters")
+    @Size(min = 5, max = 50, message = "The username must be between {min} and {max} characters long and contains only numbers and english letters")
     private String username;
 
     @NotBlank(message = "The password cannot be empty")
@@ -49,7 +46,8 @@ public class User implements BaseEntity<UUID>, UserDetails {
 
     private boolean active;
 
-    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ToString.Exclude
     private Set<Note> notes;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
@@ -57,7 +55,7 @@ public class User implements BaseEntity<UUID>, UserDetails {
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
 
-    public boolean isAdmin(){
+    public boolean isAdmin() {
         return roles.contains(Role.ADMIN);
     }
 
@@ -85,4 +83,18 @@ public class User implements BaseEntity<UUID>, UserDetails {
     public boolean isEnabled() {
         return isActive();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        User user = (User) o;
+        return id != null && Objects.equals(id, user.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
+
 }

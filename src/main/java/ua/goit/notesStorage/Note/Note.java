@@ -13,9 +13,10 @@ import javax.validation.constraints.Size;
 import java.util.Objects;
 import java.util.UUID;
 
-@Data
+@Getter
+@Setter
+@RequiredArgsConstructor
 @ToString(exclude = "author")
-@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Entity
@@ -45,11 +46,11 @@ public class Note implements BaseEntity<UUID> {
     @JoinColumn(name = "user_id")
     private User author;
 
-    public String getAuthorName(){
+    public String getAuthorName() {
         return author != null ? author.getUsername() : "";
     }
 
-    public Note(String id,String name, String message, AccessTypes accessType) {
+    public Note(String id, String name, String message, AccessTypes accessType) {
         this.name = name;
         this.message = message;
         this.accessType = accessType;

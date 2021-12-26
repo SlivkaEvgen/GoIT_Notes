@@ -88,10 +88,8 @@ public class NoteController {
     }
 
     @PostMapping("create")
-    public String addNote(@AuthenticationPrincipal User user,
-                          @ModelAttribute("editNote") Note editNote,
-                          @RequestParam(required = false) String noteId,
-                          @RequestParam(required = false) String accessType){
+    public String addNote(@AuthenticationPrincipal User user, @ModelAttribute("editNote") Note editNote,
+                          @RequestParam(required = false) String noteId, @RequestParam(required = false) String accessType){
         if (!noteId.isBlank()) {
             editNote.setId(UUID.fromString(noteId));
             editNote.setAccessType(AccessTypes.valueOf(accessType.toUpperCase()));
