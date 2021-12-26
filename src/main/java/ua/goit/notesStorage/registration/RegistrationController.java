@@ -33,7 +33,7 @@ public class RegistrationController {
     }
 
     @GetMapping("/register")
-    public String registration(Model model){
+    public String registration(){
         return "register";
     }
 

@@ -44,7 +44,7 @@ public class NoteController {
     }
 
     @GetMapping("create")
-    public String noteCreate(Map<String, Object> model){
+    public String noteCreate(){
         return "noteCreate";
     }
 

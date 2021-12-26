@@ -33,6 +33,7 @@ public class UserController {
 
     @GetMapping("error")
     public String userError(@RequestParam User user, Model model){
+        model.addAttribute(user);
         return "errorUser";
     }
 

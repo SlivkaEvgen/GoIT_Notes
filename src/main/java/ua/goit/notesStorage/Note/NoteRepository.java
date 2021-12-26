@@ -16,5 +16,3 @@ public interface NoteRepository extends RepositoryI<Note, UUID> {
     List<Note> findByAuthor(UUID uuid);
 
 }
-//    @Query("SELECT c FROM Note c WHERE NOT (c.accessType='PRIVATE' AND c.author.id<>?1)")
-//    List<Note> getListNotes(UUID uuid);

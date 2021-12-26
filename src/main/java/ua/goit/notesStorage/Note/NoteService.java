@@ -24,6 +24,3 @@ public class NoteService extends ServiceI<Note,UUID> {
         return super.findAll();
     }
 }
-//    public List<Note> findByName(String name){
-//        return noteRepository.findByName(name);
-//    }
