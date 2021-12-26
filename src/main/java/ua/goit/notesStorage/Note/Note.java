@@ -1,18 +1,20 @@
 package ua.goit.notesStorage.Note;
 
+import lombok.*;
+import org.hibernate.Hibernate;
+import org.hibernate.annotations.GenericGenerator;
 import ua.goit.notesStorage.BaseEntity;
 import ua.goit.notesStorage.authorization.User;
 import ua.goit.notesStorage.enums.AccessTypes;
-import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+import java.util.Objects;
 import java.util.UUID;
 
 @Data
 @ToString(exclude = "author")
-@EqualsAndHashCode(exclude = "author")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -24,10 +26,7 @@ public class Note implements BaseEntity<UUID> {
 
     @Id
     @GeneratedValue(generator = "UUID")
-    @GenericGenerator(
-            name = "UUID",
-            strategy = "org.hibernate.id.UUIDGenerator"
-    )
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
 
@@ -57,4 +56,16 @@ public class Note implements BaseEntity<UUID> {
         this.id = UUID.fromString(id);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Note note = (Note) o;
+        return id != null && Objects.equals(id, note.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

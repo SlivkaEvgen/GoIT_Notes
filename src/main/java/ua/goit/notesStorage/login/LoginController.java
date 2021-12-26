@@ -22,10 +22,11 @@ public class LoginController {
             AuthenticationException ex = (AuthenticationException) session
                     .getAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
             if (ex != null) {
-                errorMessage.add("Wrong login or password");//ex.getMessage());
+                errorMessage.add("Wrong login or password");
             }
         }
         model.addAttribute("message", errorMessage);
         return "login";
     }
+
 }

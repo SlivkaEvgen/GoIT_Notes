@@ -34,4 +34,5 @@ public class SwaggerConfiguration {
                 .license("https://www.apache.org/licences/LICENSE-2.0")
                 .build();
     }
+
 }

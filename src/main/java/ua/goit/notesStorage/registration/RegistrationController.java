@@ -1,9 +1,5 @@
 package ua.goit.notesStorage.registration;
 
-import lombok.AllArgsConstructor;
-import ua.goit.notesStorage.authorization.User;
-import ua.goit.notesStorage.authorization.UserService;
-import ua.goit.notesStorage.enums.Role;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,20 +9,28 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+import ua.goit.notesStorage.authorization.User;
+import ua.goit.notesStorage.authorization.UserService;
+import ua.goit.notesStorage.enums.Role;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
-import java.util.*;
+import java.util.Collections;
 import java.util.stream.Collectors;
 
-@AllArgsConstructor
 @Validated
 @Controller
 public class RegistrationController {
 
     private final UserService userService;
+
     private final PasswordEncoder passwordEncoder;
+
+    public RegistrationController(UserService userService, PasswordEncoder passwordEncoder){
+        this.userService=userService;
+        this.passwordEncoder=passwordEncoder;
+    }
 
     @GetMapping("/register")
     public String registration(Model model){
@@ -47,7 +51,7 @@ public class RegistrationController {
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
-    ModelAndView onConstraintValidationException(ConstraintViolationException e, Model model) {
+    public ModelAndView onConstraintValidationException(ConstraintViolationException e, Model model) {
         model.addAttribute("message",e.getConstraintViolations().stream()
                         .map(ConstraintViolation::getMessage)
                 .collect(Collectors.toList()));

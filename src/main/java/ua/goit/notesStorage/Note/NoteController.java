@@ -1,30 +1,33 @@
 package ua.goit.notesStorage.Note;
 
-import lombok.AllArgsConstructor;
-import ua.goit.notesStorage.authorization.User;
-import ua.goit.notesStorage.authorization.UserService;
-import ua.goit.notesStorage.enums.AccessTypes;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import ua.goit.notesStorage.authorization.User;
+import ua.goit.notesStorage.authorization.UserService;
+import ua.goit.notesStorage.enums.AccessTypes;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@AllArgsConstructor
 @Validated
 @Controller
 @RequestMapping(value = "/note")
 public class NoteController {
 
     private final NoteService noteService;
+
     private final UserService userService;
+
+    public NoteController(NoteService noteService, UserService userService){
+        this.noteService=noteService;
+        this.userService=userService;
+    }
 
     @GetMapping("list")
     public String getNotes(@AuthenticationPrincipal User user,@RequestParam(required = false,defaultValue = "") String filter, Map<String, Object> model){
@@ -58,8 +61,7 @@ public class NoteController {
 
     @GetMapping("delete/{id}")
     public String noteDelete(@AuthenticationPrincipal User user,@PathVariable String id, Map<String, Object> model){
-        Note note = noteService.getById(UUID.fromString(id));
-        if (!note.getAuthor().getId().equals(user.getId())){
+        if (!noteService.getById(UUID.fromString(id)).getAuthor().getId().equals(user.getId())){
             model.put("message", Collections.singletonList("Deleting the note is prohibited - you are not author"));
             return "noteError";
         }
@@ -69,7 +71,7 @@ public class NoteController {
 
     @GetMapping("error")
     public String noteError(Map<String, Object> model){
-        model.put("message", Collections.singletonList("TEST MESSAGE!")); //for view testing
+        model.put("message", Collections.singletonList("TEST MESSAGE!"));
         return "noteError";
     }
 
@@ -100,7 +102,7 @@ public class NoteController {
     }
 
     @ExceptionHandler({ConstraintViolationException.class})
-    ModelAndView onConstraintValidationException(ConstraintViolationException e, Model model) {
+    public ModelAndView onConstraintValidationException(ConstraintViolationException e, Model model) {
         model.addAttribute("message",e.getConstraintViolations().stream()
                         .map(ConstraintViolation::getMessage)
                 .collect(Collectors.toList()));

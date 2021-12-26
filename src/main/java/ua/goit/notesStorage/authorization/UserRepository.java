@@ -1,16 +1,14 @@
 package ua.goit.notesStorage.authorization;
 
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import ua.goit.notesStorage.RepositoryI;
 
 import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, UUID> {
+public interface UserRepository extends RepositoryI<User, UUID> {
 
     Optional<User> findByUsername(String username);
-
-
 
 }
