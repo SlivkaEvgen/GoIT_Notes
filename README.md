@@ -1,6 +1,8 @@
 # NotesStorage 
 [NotesStorage](https://goit-notes.herokuapp.com)
 
+![](notes.png)
+
 Before the start of application you have to add environment variables:
 
   - DB_USERNAME - username of user to connect to the database
