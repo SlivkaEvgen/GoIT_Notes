@@ -1,12 +1,12 @@
-package ua.goit.notesStorage.App;
+package ua.goit.notesStorage.app;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import ua.goit.notesStorage.Note.Note;
-import ua.goit.notesStorage.Note.NoteRepository;
+import ua.goit.notesStorage.note.Note;
+import ua.goit.notesStorage.note.NoteRepository;
 import ua.goit.notesStorage.authorization.User;
 
 import java.util.List;
@@ -45,5 +45,4 @@ public class MainController {
         model.put("notes", noteRepository.findAll());
         return "main";
     }
-
 }

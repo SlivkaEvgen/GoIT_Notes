@@ -1,4 +1,4 @@
-package ua.goit.notesStorage.Note;
+package ua.goit.notesStorage.note;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;

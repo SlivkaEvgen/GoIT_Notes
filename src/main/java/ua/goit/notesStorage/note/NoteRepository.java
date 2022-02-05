@@ -1,4 +1,4 @@
-package ua.goit.notesStorage.Note;
+package ua.goit.notesStorage.note;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
