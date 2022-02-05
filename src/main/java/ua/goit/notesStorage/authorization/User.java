@@ -6,7 +6,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import ua.goit.notesStorage.BaseEntity;
-import ua.goit.notesStorage.Note.Note;
+import ua.goit.notesStorage.note.Note;
 import ua.goit.notesStorage.enums.Role;
 
 import javax.persistence.*;

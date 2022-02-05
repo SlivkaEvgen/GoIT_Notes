@@ -1,4 +1,4 @@
-package ua.goit.notesStorage.Note;
+package ua.goit.notesStorage.note;
 
 import lombok.*;
 import org.hibernate.Hibernate;
