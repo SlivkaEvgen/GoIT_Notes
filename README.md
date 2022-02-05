@@ -11,8 +11,8 @@ Before the start of application you have to add environment variables:
 
 For example:
 
-  - export DB_USERNAME=postgres
+  - export DB_USERNAME=admin
 
-  - export DB_PASSWORD=super_password
+  - export DB_PASSWORD=super_secret_password
 
   - export DB_URL=jdbc:postgresql://localhost:5432/postgres
